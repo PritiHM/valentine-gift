@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <title>For Harshal ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center
+bg-gradient-to-br from-rose-500 via-pink-500 to-fuchsia-600
+font-sans px-4 overflow-hidden">
+
+<!-- QUESTION CARD -->
+<div id="questionCard"
+class="heart-start bg-gradient-to-br from-pink-100 via-rose-100 to-fuchsia-100
+p-6 text-center text-[#4a1035]
+w-full max-w-[340px] h-[420px]
+flex flex-col justify-center
+shadow-[0_20px_40px_rgba(0,0,0,0.25)]">
+
+
+<h1 class="text-2xl font-bold mb-8">
+Will you be my Valentine? 💖
+</h1>
+
+<div class="flex justify-between relative px-2">
+<button onclick="startLove()"
+class="bg-green-500 hover:bg-green-600 text-white
+px-6 py-2 rounded-full font-semibold shadow-lg">
+YES 💚
+</button>
+
+<button id="noBtn"
+class="bg-red-500 hover:bg-red-600 text-white
+px-6 py-2 rounded-full font-semibold absolute right-2 shadow-lg">
+NO ❤️‍🔥
+</button>
+</div>
+</div>
+
+<!-- GIFTS -->
+<div id="giftSection" class="hidden w-full max-w-[720px] space-y-6">
+
+<div onclick="openGift(1)" class="giftCard">🎁 Gift 1</div>
+<div id="gift1" class="giftDetail hidden flex justify-center">
+  <div class="heart-card">
+    <h2 class="font-bold mb-2">💖 i want to know??</h2>
+    <p id="quizQuestion" class="text-sm mb-3"></p>
+    <div id="quizOptions" class="flex flex-col gap-2 items-center"></div>
+  </div>
+</div>
+
+<div onclick="openGift(2)" class="giftCard">🎁 Gift 2</div>
+<div id="gift2" class="giftDetail hidden flex justify-center">
+  <div class="heart-card">
+    <h2 class="font-bold mb-2">💌 for You HM</h2>
+    <p id="loveLetter" class="text-sm leading-relaxed text-center px-2"></p>
+  </div>
+</div>
+
+<div onclick="openGift(3)" class="giftCard">🎁 Gift 3</div>
+<div id="gift3" class="giftDetail hidden flex justify-center">
+  <div class="heart-card">
+    <h2 class="font-bold mb-2">📸 Our together Memories</h2>
+    <img id="memoryImg" class="heart-image" src="image/img1.jpeg">
+  </div>
+</div>
+
+</div>
+
+<!-- FINAL LOVE -->
+<div id="finalLove"
+class="hidden fixed inset-0 flex flex-col items-center justify-center
+bg-black/70 text-center text-white z-50">
+
+  <img src="image/gif imoji.jpg" class="final-emoji" alt="love emoji">
+
+  <h1 class="text-4xl font-bold mb-4 animate-pulse">
+    I Love You Dear ❤️
+  </h1>
+
+  <p class="text-lg">Forever & Always 💞</p>
+  <p>Byeee,bss itna he thaa!!!</p>
+</div>
+
+<style>
+
+  
+.giftCard{
+  width: 240px;                 /* 🔥 width kam */
+  margin: auto;
+  background: linear-gradient(135deg,#ffd1dc,#ff8fab);
+  padding: 14px 18px;
+  border-radius: 999px;         /* 🔥 pill / capsule shape */
+  text-align: center;
+  font-weight: 700;
+  color: #4a1035;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  transition: all .3s ease;
+}
+
+.giftCard:hover{
+  transform: scale(1.05);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.35);
+}
+
+
+
+.giftDetail{background:transparent;padding:0}
+
+.heart-card{
+  width: 320px;
+  height: 380px;
+  background: linear-gradient(135deg,#ff4f9a,#ff7bbf);
+  clip-path: path(
+    "M160 40
+     C160 0, 0 0, 0 110
+     C0 220, 160 310, 160 380
+     C160 310, 320 220, 320 110
+     C320 0, 160 0, 160 40 Z"
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 18px;
+  color: #4a1035;
+  box-shadow: 0 18px 45px rgba(0,0,0,.35);
+  animation: float 3s ease-in-out infinite;
+  overflow: hidden;
+}
+
+@keyframes float{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+  100%{transform:translateY(0)}
+}
+
+.heart-image{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;  
+  margin: 0;
+  border-radius: 0;     
+  box-shadow: none;      
+  animation: zoomFade 3s ease-in-out infinite;
+}
+
+
+@keyframes zoomFade{
+  0%{opacity:0;transform:scale(1)}
+  20%{opacity:1;transform:scale(1.05)}
+  80%{opacity:1;transform:scale(1.12)}
+  100%{opacity:0;transform:scale(1.2)}
+}
+
+.final-emoji{
+  width: 90px;
+  height: 90px;
+  margin-bottom: 14px;
+  animation: pop 1.5s ease-in-out infinite;
+}
+
+@keyframes pop{
+  0%{transform: scale(1);}
+  50%{transform: scale(1.2);}
+  100%{transform: scale(1);}
+}
+.heart{
+  position: fixed;
+  top: -10px;
+  font-size: 18px;
+  animation: fall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes fall{
+  0%{
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100%{
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+</style>
+
+<script>
+/* NO BUTTON – RUNAWAY LOGIC */
+const noBtn = document.getElementById("noBtn");
+let free = false, x = 0, y = 0;
+
+function moveNo(){
+  if(!free){
+    const r = noBtn.getBoundingClientRect();
+    x = r.left;
+    y = r.top;
+    noBtn.style.position = "fixed";
+    free = true;
+  }
+
+  x += Math.random() > 0.5 ? 140 : -140;
+  y += Math.random() > 0.5 ? 140 : -140;
+
+  x = Math.max(10, Math.min(x, window.innerWidth - 120));
+  y = Math.max(10, Math.min(y, window.innerHeight - 60));
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top  = y + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("click", moveNo);
+
+function startLove(){
+  const song = document.getElementById("loveSong");
+  song.volume = 0.6;
+  song.play().catch(()=>{});
+  showGifts();
+}
+
+function showGifts(){
+  questionCard.classList.add("hidden");
+  giftSection.classList.remove("hidden");
+}
+
+function openGift(n){
+  [1,2,3].forEach(i=>{
+    document.getElementById("gift"+i).classList.add("hidden");
+  });
+
+  stopSlideshow(); 
+
+  document.getElementById("gift"+n).classList.remove("hidden");
+
+  if(n === 1) loadQuestion();
+  if(n === 2) startTyping();
+  if(n === 3) startSlideshow(); 
+}
+
+
+/* QUIZ */
+const quiz=[
+{q:"Who loves more in this relationship?",o:["Me ❤️","You ❤️","Both 😍","Can't decide 😅"]},
+{q:"Who says sorry first?",o:["Me","You","Depends","Both"]},
+{q:"Will you always be mine?",o:["YES ❤️","Forever ♾️","Always","Of course 💍"]}
+];
+let qi=0;
+
+function loadQuestion(){
+  quizQuestion.innerText=quiz[qi].q;
+  quizOptions.innerHTML="";
+  quiz[qi].o.forEach(ans=>{
+    const b=document.createElement("button");
+    b.innerText=ans;
+    b.className="bg-white px-4 py-1.5 rounded-full text-xs font-semibold w-[150px]";
+    b.onclick=()=>{
+      qi++;
+      qi<quiz.length?loadQuestion():
+      quizOptions.innerHTML=`<p class="text-center font-semibold text-sm mt-4">
+      Option dhundhne ki zarurat nahi 😌<br>
+      <span class="text-lg">You will always be <b>only mine</b> ❤️</span></p>`;
+    };
+    quizOptions.appendChild(b);
+  });
+}
+
+/* LETTER */
+const letter=`5 beautiful years of marriage,
+I still choose you every single day.
+
+Thank you for being my forever ❤️`;
+
+let li=0;
+function startTyping(){
+  loveLetter.innerHTML="";
+  li=0;
+  (function type(){
+    loveLetter.innerHTML+=letter.charAt(li++);
+    if(li<letter.length){
+      setTimeout(type,60);
+    }
+  })();
+}
+
+
+/* PHOTOS */
+let imgIndex = 1;
+let imgTimer = null;
+
+function startSlideshow(){
+  stopSlideshow(); // safety
+  imgTimer = setInterval(()=>{
+    const img = document.getElementById("memoryImg");
+    if(!img) return;
+    imgIndex++;
+    if(imgIndex > 22) imgIndex = 1;
+    img.src = `image/img${imgIndex}.jpeg`;
+  }, 3000);
+}
+
+function stopSlideshow(){
+  if(imgTimer){
+    clearInterval(imgTimer);
+    imgTimer = null;
+  }
+}
+
+
+function showFinalLove(){
+  finalLove.classList.remove("hidden");
+}
+/* ❤️ HEART RAIN */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.innerHTML = "❤️";
+  h.className = "heart";
+  h.style.left = Math.random() * window.innerWidth + "px";
+  h.style.animationDuration = (3 + Math.random() * 2) + "s";
+  document.body.appendChild(h);
+
+  setTimeout(() => {
+    h.remove();
+  }, 5000);
+}, 350);
+
+</script>
+
+<audio id="loveSong" preload="auto">
+  <source src="song/kontraa-teri-ye-adaa-romantic-song-206526.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>
