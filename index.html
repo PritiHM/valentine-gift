@@ -220,8 +220,16 @@ function startLove(){
   const song = document.getElementById("loveSong");
   song.volume = 0.6;
   song.play().catch(()=>{});
+  
+  // 🔥 SONG KHATAM HOTE HI FINAL MESSAGE
+  song.onended = () => {
+    stopSlideshow();
+    showFinalLove();
+  };
+
   showGifts();
 }
+
 
 function showGifts(){
   questionCard.classList.add("hidden");
