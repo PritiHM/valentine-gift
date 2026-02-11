@@ -9,40 +9,61 @@
 
 <body class="min-h-screen flex items-center justify-center
 bg-gradient-to-br from-rose-500 via-pink-500 to-fuchsia-600
-font-sans px-4 overflow-hidden">
-
+font-sans px-4 ">
 <!-- QUESTION CARD -->
 <div id="questionCard"
-class="heart-start bg-gradient-to-br from-pink-100 via-rose-100 to-fuchsia-100
-p-6 text-center text-[#4a1035]
-w-full max-w-[340px] h-[420px]
-flex flex-col justify-center
-shadow-[0_20px_40px_rgba(0,0,0,0.25)]">
+class="relative bg-white/30 backdrop-blur-xl
+p-8 text-center text-[#4a1035]
+w-full max-w-[360px] h-[440px]
+flex flex-col justify-center items-center
+rounded-3xl
+shadow-[0_25px_60px_rgba(0,0,0,0.3)]
+border border-white/40
+overflow-hidden
+transition duration-500 hover:scale-105">
 
+  <!-- Floating Hearts Background -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="heart-float left-6">💖</div>
+    <div class="heart-float right-8 delay-1">💕</div>
+    <div class="heart-float left-1/2 delay-2">❤️</div>
+  </div>
 
-<h1 class="text-2xl font-bold mb-8">
-Will you be my Valentine? 💖
-</h1>
+  <h1 class="text-3xl font-bold mb-10 animate-pulse drop-shadow-lg">
+    Will You Be My <br>
+    <span class="text-pink-600 text-4xl">Valentine? 💘</span>
+  </h1>
 
-<div class="flex justify-between relative px-2">
-<button onclick="startLove()"
-class="bg-green-500 hover:bg-green-600 text-white
-px-6 py-2 rounded-full font-semibold shadow-lg">
-YES 💚
-</button>
+  <div class="flex justify-between w-full relative px-4">
+    
+<button id="yesBtn" onclick="startLove()"
+    class="bg-gradient-to-r from-green-400 to-emerald-500
+    hover:scale-110 hover:shadow-xl
+    text-white px-7 py-3 rounded-full
+    font-bold transition duration-300">
+      YES 💚
+    </button>
 
-<button id="noBtn"
-class="bg-red-500 hover:bg-red-600 text-white
-px-6 py-2 rounded-full font-semibold absolute right-2 shadow-lg">
+   <button id="noBtn"
+class="bg-gradient-to-r from-red-400 to-pink-500
+text-white px-7 py-3 rounded-full
+font-bold transition duration-300">
 NO ❤️‍🔥
 </button>
+<p id="noMessage" class="mt-6 text-lg font-semibold text-pink-700 h-10 text-center"></p>
+<p id="yesMessage" class="mt-6 text-lg font-semibold text-green-700 h-10 text-center"></p>
+
+
+
+  </div>
+
 </div>
-</div>
+
 
 <!-- GIFTS -->
 <div id="giftSection" class="hidden w-full max-w-[720px] space-y-6">
 
-<div onclick="openGift(1)" class="giftCard">🎁 Gift 1</div>
+<div onclick="openGift(1)" class="giftCard">💬 Let’s Be Honest…</div>
 <div id="gift1" class="giftDetail hidden flex justify-center">
   <div class="heart-card">
     <h2 class="font-bold mb-2">💖 i want to know??</h2>
@@ -51,7 +72,7 @@ NO ❤️‍🔥
   </div>
 </div>
 
-<div onclick="openGift(2)" class="giftCard">🎁 Gift 2</div>
+<div onclick="openGift(2)" class="giftCard">💌 A Letter For You</div>
 <div id="gift2" class="giftDetail hidden flex justify-center">
   <div class="heart-card">
     <h2 class="font-bold mb-2">💌 for You HM</h2>
@@ -59,7 +80,7 @@ NO ❤️‍🔥
   </div>
 </div>
 
-<div onclick="openGift(3)" class="giftCard">🎁 Gift 3</div>
+<div onclick="openGift(3)" class="giftCard">📸 Our Little Moments</div>
 <div id="gift3" class="giftDetail hidden flex justify-center">
   <div class="heart-card">
     <h2 class="font-bold mb-2">📸 Our together Memories</h2>
@@ -85,6 +106,15 @@ bg-black/70 text-center text-white z-50">
 </div>
 
 <style>
+  body{
+  animation: heartbeat 3s infinite;
+}
+
+@keyframes heartbeat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.02)}
+}
+
 
   
 .giftCard{
@@ -186,49 +216,117 @@ bg-black/70 text-center text-white z-50">
     opacity: 0;
   }
 }
+.heart-float{
+  position:absolute;
+  font-size:22px;
+  animation: floatUp 6s linear infinite;
+  opacity:0.5;
+}
+
+.delay-1{ animation-delay:2s; }
+.delay-2{ animation-delay:4s; }
+
+@keyframes floatUp{
+  0%{
+    transform: translateY(100px);
+    opacity:0;
+  }
+  30%{
+    opacity:0.6;
+  }
+  100%{
+    transform: translateY(-120px);
+    opacity:0;
+  }
+}
 
 </style>
 
 <script>
-/* NO BUTTON – RUNAWAY LOGIC */
 const noBtn = document.getElementById("noBtn");
-let free = false, x = 0, y = 0;
+const msg = document.getElementById("noMessage");
 
-function moveNo(){
-  if(!free){
-    const r = noBtn.getBoundingClientRect();
-    x = r.left;
-    y = r.top;
-    noBtn.style.position = "fixed";
-    free = true;
+let attempt = 0;
+
+const messages = [
+  "Please don't do this 🥺",
+  "Think again… are you sure? 😏",
+  "Come on… you know it's YES 💖",
+  "Why are you even trying 😭",
+];
+
+noBtn.addEventListener("mouseenter", handleNo);
+noBtn.addEventListener("click", handleNo);
+
+function handleNo() {
+
+  attempt++;
+
+  // Runaway logic (same as your original)
+  document.body.appendChild(noBtn);
+
+  const btnWidth = noBtn.offsetWidth;
+  const btnHeight = noBtn.offsetHeight;
+
+  const padding = 20;
+
+  const maxX = window.innerWidth - btnWidth - padding;
+  const maxY = window.innerHeight - btnHeight - padding;
+
+  const randomX = padding + Math.random() * maxX;
+  const randomY = padding + Math.random() * maxY;
+
+  noBtn.style.position = "fixed";
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top  = randomY + "px";
+  noBtn.style.zIndex = "99999";
+  noBtn.style.transition = "0.15s ease";
+
+  // Message logic
+  if (attempt <= messages.length) {
+    msg.innerText = messages[attempt - 1];
+  } else {
+    msg.innerText = "Okay okay 😅 I know you love me... Just press YES already ❤️";
   }
-
-  x += Math.random() > 0.5 ? 140 : -140;
-  y += Math.random() > 0.5 ? 140 : -140;
-
-  x = Math.max(10, Math.min(x, window.innerWidth - 120));
-  y = Math.max(10, Math.min(y, window.innerHeight - 60));
-
-  noBtn.style.left = x + "px";
-  noBtn.style.top  = y + "px";
 }
 
-noBtn.addEventListener("mouseover", moveNo);
-noBtn.addEventListener("click", moveNo);
 
 function startLove(){
-  const song = document.getElementById("loveSong");
-  song.volume = 0.6;
-  song.play().catch(()=>{});
-  
-  // 🔥 SONG KHATAM HOTE HI FINAL MESSAGE
-  song.onended = () => {
-    stopSlideshow();
-    showFinalLove();
-  };
 
-  showGifts();
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const yesMsg = document.getElementById("yesMessage");
+  const noMsg = document.getElementById("noMessage");
+
+  // 🔥 NO message clear karo
+  noMsg.innerText = "";
+
+  // 🔥 Buttons hide
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+
+  // 🔥 YES romantic message show
+  yesMsg.innerText = "I knew it 😌❤️ You just made my day!";
+
+  // ⏳ 2 sec baad next screen
+  setTimeout(() => {
+
+    yesMsg.innerText = ""; // optional clean transition
+
+    const song = document.getElementById("loveSong");
+    song.volume = 0.6;
+    song.play().catch(()=>{});
+
+    song.onended = () => {
+      stopSlideshow();
+      showFinalLove();
+    };
+
+    showGifts();
+
+  }, 2000);
 }
+
 
 
 function showGifts(){
@@ -278,10 +376,18 @@ function loadQuestion(){
 }
 
 /* LETTER */
-const letter=`5 beautiful years of marriage,
-I still choose you every single day.
+const letter=`We fight,
+we argue,
+we don’t always understand each other…
 
-Thank you for being my forever ❤️`;
+But at the end of every day,
+we still come back to each other.
+
+Maybe our love isn’t perfect,
+but it’s real.
+
+And I wouldn’t trade that for anything ❤️`;
+
 
 let li=0;
 function startTyping(){
