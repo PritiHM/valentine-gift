@@ -355,25 +355,43 @@ const quiz=[
 {q:"Who says sorry first?",o:["Me","You","Depends","Both"]},
 {q:"Will you always be mine?",o:["YES ❤️","Forever ♾️","Always","Of course 💍"]}
 ];
-let qi=0;
+let qi = 0;
 
-function loadQuestion(){
-  quizQuestion.innerText=quiz[qi].q;
-  quizOptions.innerHTML="";
-  quiz[qi].o.forEach(ans=>{
-    const b=document.createElement("button");
-    b.innerText=ans;
-    b.className="bg-white px-4 py-1.5 rounded-full text-xs font-semibold w-[150px]";
-    b.onclick=()=>{
-      qi++;
-      qi<quiz.length?loadQuestion():
-      quizOptions.innerHTML=`<p class="text-center font-semibold text-sm mt-4">
+function loadQuestion() {
+
+  // Last question check
+  if (qi === quiz.length - 1) {
+    quizQuestion.innerText = quiz[qi].q;
+
+    quizOptions.innerHTML = `
+      <p class="text-center font-semibold text-sm mt-4">
       Option dhundhne ki zarurat nahi 😌<br>
-      <span class="text-lg">You will always be <b>only mine</b> ❤️</span></p>`;
+      <span class="text-lg">
+      You will always be <b>only mine</b> ❤️
+      </span>
+      </p>
+    `;
+    return;   // Yaha function stop ho jayega
+  }
+
+  // Baaki normal questions
+  quizQuestion.innerText = quiz[qi].q;
+  quizOptions.innerHTML = "";
+
+  quiz[qi].o.forEach(ans => {
+    const b = document.createElement("button");
+    b.innerText = ans;
+    b.className = "bg-white px-4 py-1.5 rounded-full text-xs font-semibold w-[150px]";
+
+    b.onclick = () => {
+      qi++;
+      loadQuestion();
     };
+
     quizOptions.appendChild(b);
   });
 }
+
 
 /* LETTER */
 const letter=`We fight,
